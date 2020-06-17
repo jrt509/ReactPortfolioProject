@@ -29,7 +29,7 @@ export default class PortfolioContainer extends Component {
         
 
         return this.state.data.map(item => {
-            return <PortfolioItems title={item.title} slug={item.slug} />;
+            return <PortfolioItems title={item.title} url={"google.com"} slug={item.slug} />;
         })
     }
     
