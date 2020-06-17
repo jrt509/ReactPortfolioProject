@@ -10,9 +10,9 @@ export default class PortfolioContainer extends Component {
             isLoading: false,
             data: [
 
-         {title: "Devcamp Fries", category: "Ecommerce"},
-         {title: "Wild Cherry Slots", category: "Gaming"}, 
-         {title: "Capstone Project", category: "Learning"}
+         {title: "Devcamp Fries", category: "Ecommerce", slug: 'devcamp fries'},
+         {title: "Wild Cherry Slots", category: "Gaming", slug: 'wild-cherry-slots'}, 
+         {title: "Capstone Project", category: "Learning", slug: 'capstone-project'}
         ]
         };
        this.handleFilter = this.handleFilter.bind(this);
@@ -29,7 +29,7 @@ export default class PortfolioContainer extends Component {
         
 
         return this.state.data.map(item => {
-            return <PortfolioItems title={item.title} />;
+            return <PortfolioItems title={item.title} slug={item.slug} />;
         })
     }
     
