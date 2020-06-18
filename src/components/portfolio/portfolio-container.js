@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from "axios";
 import PortfolioItems from "./portfolio-items";
 
 export default class PortfolioContainer extends Component {
@@ -8,14 +9,12 @@ export default class PortfolioContainer extends Component {
         this.state = {
             pageTitle: "Welcome to my portfolio",
             isLoading: false,
-            data: [
+            data: []
 
-         {title: "Devcamp Fries", category: "Ecommerce", slug: 'devcamp fries'},
-         {title: "Wild Cherry Slots", category: "Gaming", slug: 'wild-cherry-slots'}, 
-         {title: "Capstone Project", category: "Learning", slug: 'capstone-project'}
-        ]
+        
         };
        this.handleFilter = this.handleFilter.bind(this);
+      
     }
     handleFilter(filter) {
         this.setState({
@@ -24,19 +23,41 @@ export default class PortfolioContainer extends Component {
             })
         })
     }
-
-    portfolioItems() {
-        
-
-        return this.state.data.map(item => {
-            return <PortfolioItems title={item.title} url={"google.com"} slug={item.slug} />;
-        })
+    getPortfolioItems() {
+    
+        axios
+          .get("https://robtouton.devcamp.space/portfolio/portfolio_items")
+          .then(response => {
+            console.log("response data", response);
+            this.setState({
+                data: response.data.portfolio_items
+            });
+          })
+          .catch(error => {
+            console.log(error);
+          });
     }
     
+        
+        
+    portfolioItems() {
+        return this.state.data.map(item => {
+            return (
+                 <PortfolioItems key={item.id} title={item.name} url={item.url} slug={item.id} />
+            )
+        });
+      }
+    
+    
+    componentDidMount() {
+        this.getPortfolioItems()
+    }
     
     render() {
+       
         if (this.state.isLoading) {
             return <div>Loading...</div>;
+       
         }
         return (
             <div>
@@ -44,6 +65,7 @@ export default class PortfolioContainer extends Component {
                 <button onClick={() => this.handleFilter('Ecommerce')}>Ecommerce</button>
                 <button onClick={() => this.handleFilter('Gaming')}>Gaming</button>
                 <button onClick={() => this.handleFilter('Learning')}>Learning</button>
+
                 {this.portfolioItems()}
                
             </div>
