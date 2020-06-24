@@ -45,7 +45,7 @@ export default class App extends Component {
   }
 
   checkLoginStatus() {
-    return axios.get("https://api.devcamp.space/logged in", {
+    return axios.get("https://api.devcamp.space/logged_in", {
        withCredentials: true})
        .then(response => {
         const loggedIn = response.data.logged_in;
@@ -76,7 +76,7 @@ export default class App extends Component {
   }
   authorizedPages() {
     return [
-      <Route path="/portfolio-manager" component={PortfolioManager} />
+      <Route key="portfolio-manager" path="/portfolio-manager" component={PortfolioManager} />
     ]
   }
  
