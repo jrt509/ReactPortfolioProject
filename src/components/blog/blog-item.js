@@ -24,7 +24,7 @@ const BlogItem = props => {
                     </span>
                 }
                 >
-                    {content}
+                    {striptags(content)}
                 </Truncate>
             </div>
         </div>
