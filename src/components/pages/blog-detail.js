@@ -14,14 +14,28 @@ export default class BlogDetail extends Component {
             editMode: false
         };
         this.handleEditClick = this.handleEditClick.bind(this);
+        this.handleFeaturedImageDelete = this.handleFeaturedImageDelete.bind(this);
+        this.handleUpdateFormSubmission = this.handleUpdateFormSubmission.bind(this);
 
 
     }
-    handleEditClick() {
-        console.log("handle edit clicked")
+    handleUpdateFormSubmission(blog) {
         this.setState({
-            editMode: true
+            blogItem: blog,
+            editMode: false
         })
+    }
+    handleFeaturedImageDelete() {
+        this.setState({
+            blogItem: {
+                featured_image_url: ""
+            }
+        })
+    }
+    handleEditClick() {
+        if (this.props.loggedInStatus === "LOGGED_IN") {
+        this.setState({ editMode: true })
+        }
     }
 
     getBlogItem() {
@@ -49,18 +63,25 @@ export default class BlogDetail extends Component {
 
         const contentManager = () => {
             if (this.state.editMode) {
-                return <BlogForm editMode={this.state.editMode} blog={this.state.blogItem}/>
-            } else {
                 return (
-                <div className="content-container">
-                    <h1 onClick={this.handleEditClick}>{title}</h1>
+                    <BlogForm
+                        handleFeaturedImageDelete={this.handleFeaturedImageDelete} 
+                        handleUpdateFormSubmission={this.handleUpdateFormSubmission}
+                        editMode={this.state.editMode} 
+                        blog={this.state.blogItem}
+                    />
+                )
+            }   else {
+                return (
+                    <div className="content-container">
+                        <h1 onClick={this.handleEditClick}>{title}</h1>
 
             
-                    <BlogFeaturedImage img={featured_image_url} />
+                        <BlogFeaturedImage img={featured_image_url} />
                     
 
-                    <div className="content">{ReactHtmlParser(content)}</div>
-                </div>
+                        <div className="content">{ReactHtmlParser(content)}</div>
+                    </div>
                 )
             }
         }
