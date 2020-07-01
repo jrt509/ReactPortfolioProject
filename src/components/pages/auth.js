@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import loginImg from '../../../static/assets/images/auth/loginImagePortfolio.jpg';
+import loginImg from '../../../static/assets/images/auth/login.jpg';
 import Login from '../auth/login';
 export default class Auth extends Component {
     constructor(props) {
